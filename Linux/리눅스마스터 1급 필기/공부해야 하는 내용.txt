@@ -1,0 +1,34 @@
+1과목
+* 라이선스 종류 및 특징
+* 리눅스 배포판 종류
+* 클러스터링 기법
+* grub.conf의 설정
+* X클라이언트 관련 파일
+* RAID관련 개념
+* 시그널 번호 및 크기
+* 네트워크 주소 대역대 설정
+* X윈도 관련 개념
+* chkconfig란?
+* 점보프레임이란?
+
+2과목
+// ldd path : 지정한 프로그램의 공유 라이브러리 의존성 확인
+// rpm query 공부
+// crontab 작업 추가 제거
+// /etc/fstab 순서 암기
+// passwd 옵션 암기
+// /etc/login.defs 와 /etc/default/useradd의 차이 암기
+* 리눅스 모듈 관련 공부
+* 프린팅 관련 공부(CUPS 등등)
+// 백업관련 명령어 및 옵션
+* 리눅스 주요 보안도구
+* 로그파일들
+// rsync
+// grep 옵션들
+* 명령어들 인자 순서
+* who, who i am, whoiam, whoami 이중 유효하지 않은 명령어는?
+* skel의 경로(/etc/skel/*)
+* useradd 인자, grep 인자, ps 인자, grep의 awk와 같은 것들
+* SIGUP(1)의 역할
+* jobs인자
+* rsync 특징

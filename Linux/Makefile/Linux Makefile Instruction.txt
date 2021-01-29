@@ -1,0 +1,62 @@
+CC = gcc
+
+main: main.cpp cal.o
+	$(CC) -o main main.cpp cal.o
+cal.o: cal.cpp
+	$(CC) -c -o cal.o cal.cpp
+clean:
+	rm -rf main cal.o
+	
+1. Target : 실행파일, Object파일, 라이브러리등 목적 규칙을 정의.(여기서는 main, cal.o)
+2. Dependency : Target을 만들 때 의존성을 규정(main을 만들기 위해서 main.cpp 와 cal.o가 필요)
+3. Recipe : Target을 만들기 위한 명령어(main을 만들기 위해 gcc -c -o cal.o cal.cpp가 필요)
+4. Macro : 간편하게 이름정의 가능(CC = gcc)
+5. Dummy Target : 파일을 따러 생성하지는 않지만 make로 실행되는 명렁어 정의(clean: rm -rf main cal.o)
+
+
+* Makefile 함수
+ - wildcard : wildcard 함수의 한가지 사용법은 한 디렉토리에 있는 모든 C 소스 파일들의 리스트를 획득하는 것이다. 다음과 같이	-> $(wildcard *.c)
+ - patsubst : $(patsubst 찾을 패턴, 변경할 패턴, 대상 문자) => subst와 기능은 동일하나 확장자를 바꿀때 사용			-> $(patsubst %.c, %.o, text)
+ 
+/*
+  MARCH = armv7-a                 # Macro
+  MCPU = cortex-a8                # Macro
+  CC = arm-none-eabi-gcc          # Macro
+  AS = arm-none-eabi-as           # Macro
+  LD = arm-none-eabi-ld           # Macro
+  OC = arm-none-eabi-objcopy      # Macro
+  
+  LINKER_SCRIPT = navilos.ld      # Macro
+  MAP_FILE = build/navilos.map    # Macro
+ 
+  ASM_SRCS = $(wildcard boot/*.S) # Macro and internal fnction
+  ASM_OBJS = $(patsubst boot/%.S, build/%.os, $(ASM_SRCS)) # Macro and internal function
+ 
+  C_SRCS = $(wildcard boot/*.c) # Macro and internal function
+  C_OBJS = $(patsubst boot/%.c, build/%.o, $(C_SRCS)) # Macro and internal function
+ 
+  INC_DIRS = include  #Include Function
+ 
+  TARGET=navilos.axf  # Target
+ 
+  .PHONY: all clean
+ 
+  all: $(TARGET)
+ 
+  clean:
+      @rm -rf build
+ 
+  run: $(TARGET)
+      qemu-system-arm -M realview-pb-a8 -kernel $(TARGET)
+ 
+  $(TARGET): $(ASM_OBJS) $(C_OBJS)  $(LINKER_SCRIPT)
+      $(LD) -n -T $(LINKER_SCRIPT) -o $(TARGET) $(ASM_OBJS) $(C_OBJS) -Map=$(MAP_FILE)
+ 
+  build/%.os: $(ASM_SRCS)
+      mkdir -p $(shell dirname $@)
+      $(CC) -march=$(MARCH) -mcpu=$(MCPU) -I $(INC_DIRS) -c -g -o $@ $<
+ 
+  build/%.o: $(C_SRCS)
+      mkdir -p $(shell dirname $@)
+      $(CC) -march=$(MARCH) -mcpu=$(MCPU) -I $(INC_DIRS) -c -g -o $@ $<
+*/

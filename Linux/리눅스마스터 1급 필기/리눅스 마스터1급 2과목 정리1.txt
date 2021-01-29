@@ -1,0 +1,113 @@
+리눅스 rpm 명령어
+	1. 자주 사용하는 명령어
+	 rpm -ivh or rpm -Uvh
+	  -> i : install
+	  -> U : Update
+	  -> vh : i와 U모드에서 주로 사용하는 옵션으로 v(자세히 출력), h(진행상황#출력)
+	 
+	 --nodeps : 의존성을 확인하지 않고 통과
+	 
+	2. RPM Query
+	 2-1) rpm -qa : -a(설치된 전체 패키지 출력)
+	 2-2) rpm -qi target : -i(target의 자세한 정보 보기)
+	 2-3) rpm -qf file : -f(특정 프로그램이 어떤 패키지로부터 설치되었는지 확인)
+	 2-4) rpm -ql package : -l(특정 패키지가 설치한 파일이 어디에 설치되었는지 확인)
+	 2-5) rpm -qc package : -c(패키지 내의 설정 파일 목록만 확인)
+	 2-6) rpm -qR package : -R(패키지 설치를 위한 의존성 목록 확인)
+	 2-7) rpm -qp : -p(설치를 가정하고 미리 확인하는 용도)
+ 
+리눅스 crontab 명령어
+	1. 옵션
+	 - crontab -l : 등록된 작업 출력
+	 - crontab -e : crontab 편집
+	 - crontab -r : 작업목록 모두 삭제
+	 - crontab -u user: 특정 유저의 크론탭 지정
+	 
+리눅스 fstab 내용 순서
+	FileSystem장치 - MountPoint - FileSystem종류 - 옵션 - 덤프 - 파일체크옵션
+	
+리눅스 passwd명령어
+	1. 옵션
+	 - passwd -S user : user의 패스워드에 대한 정보를 알 수 있다
+	 - passwd -l user : user의 패스워드를 잠근다(lock)
+	 - passwd -u user : user의 패스워드를 푼다(unlock)
+	 - passwd -d user : user의 패스워드를 제거한다(비번없이 로그인 가능)
+	 - passwd -x num user : user의 현재 패스워드 유효기간 설정
+	 - passwd -i num user : user의 패스워드 만료 후 계정만료 유예기간
+리눅스 chage명령어
+	1. 옵션
+	 - chage -l user : user의 패스워드에 대한 정보를 알 수 있다.
+	 - chage -m num user : 패스워드 변경 후 최소 사용기간 지정
+	 - chage -M num user : 패스워드 만기일 지정
+	 - chage -I num user : 만기일 이후 계정만료 유예기간
+	 - chage -E date user : 계정 만기일 지정
+	 
+리눅스 useradd명령어
+	1. 설정파일
+	 - /etc/login.defs : 유저생성시 패스워드 관련 정책을 설정
+	 - /etc/default/useradd : 유저생성시 기본적인 내용 + 패스워드 관련 정보들을 설정(ex: 홈디렉터리)
+	 
+리눅스 blkid, df
+	1. blkid
+	 - 하드디스크의 파티션 정보에 파일시스템 정보까지 볼 수 있는 명령어(uuid, format 포함)
+	2. df
+	 - 파티션별 저장공간 사용량 출력
+	 
+리눅스 nice 명령어
+	1. nice [process]			: 해당 프로세스를 추가실행
+	2. nice -n [num] [process]	: 조정된 값으로 프로세스를 추가실행
+	3. nice -[-num] [process]	: 감소 또는 증가된 값으로 프로세스를 추가실행
+리눅스 renice 명령어
+	1. renice priority pid		: 해당 PID의 프로세스의 우선순위 죽시 변경
+	
+리눅스 group관련 명령어
+	1. groups user : 사용자가 포함된 그룹 나열
+	2. groupadd name : 그룹생성
+	3. groupdel name : 그룹삭제
+	4. gpasswd name : 그룹 암호 지정
+	5. usermod -g 또는 -G : -g는 주 그룹 변경, -G는 서브그룹 추가
+	6. newgrp name : 다른 그룹으로 로그인
+	
+리눅스 modprobe명령어
+	1. 옵션
+	 - modprobe 모듈명 : 모듈추가
+	 - modprobe -l : 모든 모듈목록 출력
+	 - modprobe -r 모듈명: 모듈제거(의존성 포함)
+	 - modprobe -c 모듈명
+	
+리눅스 모놀리식커널 vs 마이크로 커널
+	1. 모놀리식 : 일체형 커널
+	2. 마이크로 : 탈부착형 커널
+
+리눅스 백업 명령어
+	1. tar : 여러 파일을 하나로 묶어주는 작업으로 권한유지 등 다양한 옵션 사용 가능
+	 옵션	-f : 대상 tar 이름 지정
+			-c : create(tar생성, 기존 아카이브 덮어쓰기)
+			-x : extract(tar 추출)
+			-t : tar에 포함된 내용 확인
+			-z : gzip 압축 적용
+			-Z : zip 압축 적용
+			-j : bzip2 압축 적용
+			-J : xz 압축 적용
+	2. cpio : 파일 단위 백업(tar보다 빠름, 특수파일백업 가능, 손상되도 나머지 복구)
+	 옵션	-v : 파일명 목록 출력
+			-i : 압축해제
+			-o : 압축
+			-c : 아스키형식으로 헤더정보를 읽고 쓴다
+			-t : -i와 함께 사용하며 cpio파일에 포함된 디렉터리와 파일 목록 출력
+			
+	3. dump : 파일 시스템 단위 백업	<--->	restore(백업복구)
+	4. dd(disk dump) : 파티션 단위 백업
+	
+리눅스 rsync명령어
+	1. 개요
+	 - 원격동기화(네트워크 프로토콜)
+	 - scp보다 빠름, 증분백업(변한 파일만 복사), 링크파일가능 및 소유권 유지
+	2. 옵션
+	 -v : verbose
+	 -r : Reculsively 데이터 복사
+	 -a : 링크, 소유권, timestamp등등 모두 복사
+	 -z : 파일 데이터 압축
+	 -h : 진행상황 출력
+	 -e : ssh사용
+	   -> rsync -ravh -e 'ssh -p 22' ./data pi@112.155.213.28:/home/pi/rsync_test

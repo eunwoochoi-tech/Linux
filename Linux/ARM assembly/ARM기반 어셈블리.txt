@@ -1,0 +1,36 @@
+ARM기반 어셈블리어 집합
+
+* 상수값을 표현할 때 #을 붙여서 사용( ex: #0x1F )
+  LDR명령어에서는 상수값 표현시 =을 붙여서 사용( ex: =0x1F )
+
+1. 산술연산
+ - ADD : +연산 명령	(ADD a, b, c ==> a = b + c)			# Add
+ - SUB : -연산 명령	(SUB a, b, c ==> a = b - c)			# Sub
+ 
+2. 비트연산
+ - AND : &비트연산		(AND a, b, c ==> a = b & c)			# And
+ - ORR : |비트연산		(ORR a, b, c ==> a = b | c)			# Or
+ - EOR : ^비트연산		(EOR a, b, c ==> a = b ^ c)			# Exclusive Or
+ - BIC : &!비트연산	(BIC a, b, c ==> a = b & !c)		# Not And
+
+3. 대입연산
+ - MOV : 대입연산		(MOV a, b ==> a = b)				# Move
+
+4. 쉬프트 연산
+ - LSL : <<연산		(LSL a, b, c ==> a = b << c)		# Left shift
+ - RSL : >>연산		(RSL a, b, c ==> a = b >> c)		# Right shift
+
+5. 분기명령
+ - B : goto명령으로 return하지 않는다 (B main)					# Branch
+ - BL : sub-routin call으로 실행 완료되면 return한다 (BL main)	# Branch with Link
+ 
+6. 비교연산
+ - CMP : 비교연산으로 결과에 따라서 CPSR의 Flag 변경				# Compare				CMP R0, R1				a = R1 - R0;
+         (cmp a, b ==> a - b 연산으로 해서 CPSR의 Flag 변경)							ADDER R0, R1, #0x10		if (a == 0) R0 = R1 + 0x10;
+		 CMP연산 이후에 기본 명령문뒤에 추가 코드를 넣어서 조건부 명령으로 실행 가능						MOVNE R0, #0x10			else R0 = 0x10;
+
+7. 메모리연산
+ - STR : 레지스터값 -> 메모리주소
+		 (STR R1, [R0] ==> R0주소에 R1값 저장)				# Store To Memory
+ - LDR : 메모리주소 -> 레지스터값								# Load To Register
+		 (LDR R0, =0x1F ==> R0레지스터에 0x1F값 저장)

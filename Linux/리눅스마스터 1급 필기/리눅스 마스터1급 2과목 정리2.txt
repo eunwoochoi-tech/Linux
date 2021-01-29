@@ -1,0 +1,104 @@
+리눅스 시스템관리(시스템 및 보안관리)
+
+1. 시스템 분석
+ 1-1 시스템 로그의 개요
+  1) syslog
+    - 초기에 사용
+	- /etc/syslog.conf설정을 기반으로 /var/log에 로그파일 생성
+  2) rsyslog
+    - syslog보다 다양한 기능을 제공(최근에 사용)
+	- 주요파일	/etc/rc.d/init.d/rsyslog or /etc/init.d/rsyslog : 데몬
+				/etc/sysconfig/rsyslog : 실행 관련 옵션
+				/etc/rsyslog.conf : 데몬 환경설정
+				/sbin/rsyslogd : 실행 프로그램
+				
+ 1-2 로그 파일 관리t
+  3) logrotate
+    - 로그 파일을 여러개로 분할
+	- 주요파일	/etc/logrotate.conf : 환경설정 파일(시스템과 관련된 기본적인 로그파일 설정)
+				/etc/logrotate.d	: 응용프로그램은 logrotate.d 디렉터리 하위에 위치해서 로그파일 설정
+				
+ 1-3 로그 관련 주요 파일
+  1) /var/log/messages : 시스템에서 발생하는 표준 메시지 기록
+  2) /var/log/secure : 인증기반 접속관련 로그 기록(login 등등)
+  3) /var/log/dmesg : 커널부트 메시지 로그
+  4) /var/log/xferlog : FTP접속관련 작업 기록 (ASCII형태)
+  5) /var/log/cron : cron관련 정보가 기록
+  6) /var/log/boot.log : 부팅 시 동작하는 데몬관련 정보
+  7) /var/log/wtmp : 성공한 로그인/로그아웃 정보 저장 (last명령어)
+  8) /var/log/btmp : 로그인 실패 정보 저장 (lastb명령어)
+  9) /var/log/lastlog : 각각의 사용자가 마지막으로 로그인한 정보 출력 (lastlog명령어)
+  
+  
+2. 시스템 보안 관리
+ 2-1 리눅스와 보안 개요
+  1) 물리적 보안 설정 : BIOS보안 설정(암호지정)
+  2) 시스템 정보 감추기 : 접속할 때 /etc/issue 및 /etc/issue.net의 내용을 보여주는데 이곳에 커널버전이 명시되어 있기에 바꾸는것이 좋다
+ 
+ 2-2 sysctl과 보안
+  1) /proc/sys 하위 디렉토리에 대한 커널 매개변수 값 변경
+  2) sysctl은 /proc/sys/를 최상위 디렉터리로 인식
+  3) 재부팅시에 매개변수 값을 변경하려면 /etc/sysctl.conf에 등록
+  4) 옵션
+	-a : 커널 매개변수값 모두 출력
+	-p : 특정 변수 파일에 설정된 값 출력
+	-w 변수=값 : 매개변수 추가 	
+  5) 주요 항목 내용(/proc/sys/net/ipv4)
+    - icmp_echo_ignore_all : ICMP패킷 응답 여부
+	- icmp_echo_ignore_broadcases : 핑 차단(smurf공격 막기용)
+	- tcp_syncookies : SYN패킷의 도착 빈도가 일정횟수보다 많을 경우 해당 요청 허용X (SYN Flooding 공격 막기용)
+	- tcp_max_syn_backlog : TCP통신시 SYN을 받고 SYN+ACK를 보냈는데 ACk가 돌아오지 않을 경우 대기시킬 클라이언트 개수
+	- tcp_fin_timeout : TCP세선 종료 후 얼마나 세션연결을 유지하고 있을지 설정
+	- tcp_keepalive_time : TCP연결 상태를 계속 유지시키기 위한 시간 설정
+	- tcp_timestamps : 외부에서 서버의 날짜 정보를 확인 가능하게 할 것인지 지정
+	
+ 2-3 ssh
+  1) ssh의 특징
+    - telnet, rlogin에 비해 안전
+	- 원격 셸 지원
+	- scp지원 및 sftp지원
+  2) ssh 서버 설정
+    - /etc/ssh/sshd_config : ssh서버의 환경 설정파일
+	- /etc/rc.d/init.d/sshd : 실행 데몬 스크립트
+  3) 옵션
+    -p : 포트 바꿈
+	
+ 2-4 PAM
+  1) PAM의 개요
+    - 사용자를 인증하고 사용자에 따라 접근을 제어
+  2) PAM의 구성
+    - /lib/security or /var/lib/security에 라이브러리 위치
+	- /etc/pam.d 디렉터리에 PAM사용 서비스 설정파일 저장
+  3) PAM의 주요 모듈
+    - pam_securetty.so : root로 접속할 경우 /etc/securetty에 기록된 터미널일 경우만 허가
+	- pam_lisfile.so : /etc/nologin파일이 존재하면 root만 로그인 가능 및 다른 사용자는 거부
+	- pam_deny.so : 접근을 무조건 거부할 때 사용
+	- pam_rootok.so : root가 암호입력없이 해당 서비스에 대한 접근 허용
+	- pam_wheel.so : root권한을 얻을 수 있는 사용자를 wheel이라는 그룹으로 묶어서 사용하도록 지원
+	
+ 2-5 sudo
+  1) sudo관련 명령어
+    - visudo : /etc/sudoers를 편집할 때 사용하는 명령어
+	- /etc/sudoers : 특정 사용자에게 부여할 root 권한 명령 지정 (설정법 -> 사용자 접속한곳=명령어경로)
+	
+
+3. 파일 시스템 보안
+ 3-1 lsattr, chattr
+  1) lsattr이란? : 파일에 설정된 속성을 확인하는 명령어
+  2) chattr이란? : 파일의 속성을 변경하는 명령
+ 
+ 3-2 ACL(Access Control List)
+  1) getfacl : 파일이나 디렉터리에 설정된 접근 권한 리스트 확인
+  2) setfacl : 접근 권한 리스트 변경
+     -m : 권한을 지정하거나 수정할 때 사용
+	 -x : 권한 삭제
+	 -R : 하위 디렉터리까지 변경
+	 -b : 지정한 권한을 전부 제거
+
+4. 주요 보안 도구
+ 4-1 nmap : 서비스중인 포트를 스캔(불필요하게 작동되고 있는 서비스포트 확인 가능)
+ 4-2 tcpdump : 네트워크 인터페이스를 거치는 패킷들의 헤더정보를 출력
+ 4-3 tripwire : 파일 변조 여부 검사
+ 4-4 nessus : 서버의 보안 취약점 검사
+ 4-5 GnuPG : 데이터 임호화 및 디지털 서명 생성
+ 4-6 John The Ripper : 패스워드 크랙 도구

@@ -1,0 +1,26 @@
+zsh-autosuggestions
+
+1. ~/.oh-my-zsh/plugins 폴더에 들어가서 아래의 명령어 실행
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+
+2. ~/.zshrc에 아래의 구문 추가
+plugins=(zsh-autosuggestions)
+
+3. ~/.zshrc에 설치한 플러그인의 zsh파일 경로 추가
+vi ~/.zshrc
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh 를 추가
+
+
+zsh-syntax-highlighting
+
+1. ~/.oh-my-zsh/plugins 폴더에 들어가서 아래의 명령어 실행
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+
+2. ~/.zshrc에 아래의 구문 추가
+plugins=(zsh-syntax-highlighting)
+
+3. ~/.zshrc에 설치하면 플러그인의 zsh파일 경로 추가
+ -> 
+
+
+* MacOS의 경우 brew를 이용해서 설치한다면 설치 후 실행할 명령어를 보여줌(그거 따라하면 금방 끝남)

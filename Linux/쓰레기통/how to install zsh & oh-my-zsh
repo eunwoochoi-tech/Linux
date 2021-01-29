@@ -1,0 +1,28 @@
+Mac book m1
+
+# homebrew 설치경로 만들기
+cd /opt
+
+# homebrew가 설치될 디렉터리 만들기
+sudo mkdir homebrew
+
+# 소유자 변경
+sudo chown -R $(whoami) /opt/homebrew
+
+# homebrew다운 후 디컴프레스
+curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip 1 -C homebrew
+
+# 쉘 path에 홈브루 path 추가
+echo "export PATH=/opt/homebrew/bin:$PATH" >> ~/.zshrc
+
+# zsh 설치 및 oh-my-zsh설치
+brew install zsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+
+
+
+리눅스
+
+sudo apt-get install zsh
+chsh -s $(which zsh)
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
