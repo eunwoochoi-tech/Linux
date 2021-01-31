@@ -36,7 +36,7 @@ function set_configuration()
     if [ ! -f ${cur_path}/${target} ]; then
         echo "There is no ${target} file"
         echo "Downloading...."
-        wget https://raw.githubusercontent.com/SexyEunwoo/IOT_COURSE/main/Linux/Default%20Setting%20Files/${target}
+        wget https://raw.githubusercontent.com/SexyEunwoo/Linux/master/Default%20Setting%20Files/${target}
         if [ ! -f ${cur_path}/${target} ]; then
             echo "Download Failed"
             exit -1
