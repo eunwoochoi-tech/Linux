@@ -50,7 +50,7 @@ color jellybeans
 filetype on                                 "vim filetype on
 "Source Explorer 환경설정
 nmap <F8> :SrcExplToggle<CR>                "F8 Key = SrcExpl Toggling
-nmap <F9> :TagbarToggle<CR>4. vi에서 :PluginInstall하기
+nmap <F9> :TagbarToggle<CR>                 "4. vi에서 :PluginInstall하기
 nmap <C-H> <C-W>h                           "왼쪽 창으로 이동
 nmap <C-J> <C-W>j                           "아래 창으로 이동
 nmap <C-K> <C-W>k                           "윗 창으로 이동
