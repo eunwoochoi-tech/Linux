@@ -132,7 +132,7 @@ function set_configuration()
 	echo ""
 }
 
-# 1. Check Parameter Count( parameter is coming like "all" "vi" "tmux" etc.. )
+# 1. Check Parameter Count( parameter should be written like "all" "vi" "tmux" etc.. )
 if [ ${parameter_cnt} -eq 0 ]; then
     echo "Usage <Parameter1> <...>"
     exit -1
