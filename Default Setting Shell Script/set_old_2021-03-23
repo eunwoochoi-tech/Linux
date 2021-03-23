@@ -5,7 +5,6 @@ cur_path=`pwd`
 
 os_list_debian=("Debian" "Ubuntu" "Raspbian")
 os_list_redhat=("Centos" "Fedora" "RHEL")
-dependencies=("vim" "ctags" "wget" "curl")
 
 target_vi='.vimrc'
 target_tmux='.tmux.conf'
@@ -33,11 +32,11 @@ function get_installer()
 	
 	for os in ${os_list_redhat[@]}
 	do
-	    if [ ${target_os} == ${os} ]; then
-            echo "${os} OS detected"
-	    target_os_installer="yum"
-	    target_os_install_option="install"
-	    return
+		if [ ${target_os} == ${os} ]; then
+			echo "${os} OS detected"
+			target_os_installer="yum"
+			target_os_install_option="install"
+			return
 		fi
 	done
 
@@ -45,18 +44,16 @@ function get_installer()
 	target_os_installer="none"
 }
 
-function install_dependencies()
-{
-	for dependency in ${dependencies[@]}
-	do
-		${target_os_installer} ${target_os_install_option} ${dependency}
-	done
-}
-
 function install()
 {
 	local parameter=$1
 
+	# Get Current OS name
+	target_os=`hostnamectl | awk '/Operating System/ {print $3}'`
+
+	# Get Installer like apt, yum based on OS name
+	get_installer
+	
 	# Check current OS can be supported
 	if [ ${target_os_installer} == "none" -o ${target_os_install_option} == "none" ]; then
 		echo ${target_os} OS is not supported
@@ -110,8 +107,8 @@ function set_configuration()
 
     # configure set .vimrc
     if [ ${target} == ${target_vi} ]; then
-	    echo "Installing vim..."
-	    install vim
+		echo "Installing vim..."
+		install vim
         echo "Copying ${target} file to home directory..."
         cp "${cur_path}/${target}" "${root_path}"
         echo "Copying Done!"
@@ -141,14 +138,7 @@ if [ ${parameter_cnt} -eq 0 ]; then
     exit -1
 fi
 
-# 2. get installer
-# Get Current OS name and call get_installer
-# Get Installer like apt, yum based on OS name
-target_os=`hostnamectl | awk '/Operating System/ {print $3}'`
-get_installer
-install_dependencies
-
-# 3. send parameters to set function at a time
+# 2. send parameters to set function at a time
 for parameter in ${parameters[@]}
 do
     set ${parameter}
