@@ -15,6 +15,12 @@ Plugin 'git://git.wincent.com/command-t.git'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 
+" vim-easymotion(커서이동)
+Plugin 'Lokaltog/vim-easymotion'
+
+" 단어검색시 highlight
+Plugin 'haya14busa/incsearch.vim'
+
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
@@ -57,8 +63,28 @@ nnoremap <C-F6> :bnext!<Enter>        " 다음 버퍼로 이동
 nnoremap <C-F4> :bp <BAR> bd #<Enter> " 현재 버퍼를 닫고 이전 버퍼로 이동
 nnoremap , :bn<CR> " 콤마(,)를 사용하여 다음 버퍼로 이동
 
-"vim-diminmactive
-let g:diminactive_use_syntax = 1
+"vim-incsearch
+set hlsearch
+let g:incsearch#auto_nohlsearch = 1
+map n  <Plug>(incsearch-nohl-n)
+map N  <Plug>(incsearch-nohl-N)
+map *  <Plug>(incsearch-nohl-*)
+map #  <Plug>(incsearch-nohl-#)
+map g* <Plug>(incsearch-nohl-g*)
+map g# <Plug>(incsearch-nohl-g#)
+let g:incsearch#highlight = {
+		\   'match' : {
+		\     'group' : 'IncSearchUnderline',
+		\     'priority' : '10'
+		\   },
+		\   'on_cursor' : {
+		\     'priority' : '100'
+		\   },
+		\   'cursor' : {
+		\     'group' : 'ErrorMsg',
+		\     'priority' : '1000'
+		\   }
+		\ }
 
 
 color jellybeans
