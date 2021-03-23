@@ -21,13 +21,25 @@ Plugin 'Lokaltog/vim-easymotion'
 " 단어검색시 highlight
 Plugin 'haya14busa/incsearch.vim'
 
-Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+" 디렉터리 검색 nerdtree
 Plugin 'scrooloose/nerdtree'
+
+" 문법확인
 Plugin 'scrooloose/syntastic'
+
+" 파일검색 및 파일 열기
 Plugin 'ctrlpvim/ctrlp.vim'
+
+" 스킨
 Plugin 'nanotech/jellybeans.vim'
+
+" tagbar
 Plugin 'majutsushi/tagbar'
+
+" indent-guides
 Plugin 'nathanaelkane/vim-indent-guides'
+
+" 뭐였지
 Plugin 'blueyed/vim-diminactive'
 
 call vundle#end()            " required
@@ -62,6 +74,7 @@ nnoremap <C-F5> :bprevious!<Enter>    " 이전 버퍼로 이동
 nnoremap <C-F6> :bnext!<Enter>        " 다음 버퍼로 이동
 nnoremap <C-F4> :bp <BAR> bd #<Enter> " 현재 버퍼를 닫고 이전 버퍼로 이동
 nnoremap , :bn<CR> " 콤마(,)를 사용하여 다음 버퍼로 이동
+nnoremap . :bd<CR> " 콤마(,)를 사용하여 다음 버퍼로 이동
 
 "vim-incsearch
 set hlsearch
@@ -86,6 +99,9 @@ let g:incsearch#highlight = {
 		\   }
 		\ }
 
+"vim -ctrlp
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
 
 color jellybeans
 
@@ -93,7 +109,7 @@ color jellybeans
 filetype on                                 "vim filetype on
 
 "Source Explorer 환경설정
-nmap <F8> :SrcExplToggle<CR>                "F8 Key = SrcExpl Toggling
+" nmap <F8> :SrcExplToggle<CR>                "F8 Key = SrcExpl Toggling
 nmap <F9> :TagbarToggle<CR>                 "4. vi에서 :PluginInstall하기
 nmap <C-H> <C-W>h                           "왼쪽 창으로 이동
 nmap <C-J> <C-W>j                           "아래 창으로 이동
