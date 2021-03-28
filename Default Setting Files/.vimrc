@@ -156,6 +156,9 @@ set statusline=\ %<%l:%v\ [%P]%=%a\ %h%m%r\ %F\
 " 검색 설정
 set ignorecase
 
+" 투명도 설정
+hi Normal guibg=NONE ctermbg=NONE
+
 " 마지막으로 수정된 곳에 커서를 위치함
 au BufReadPost *
 \ if line("'\"") > 0 && line("'\"") <= line("$") |
