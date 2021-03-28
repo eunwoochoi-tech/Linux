@@ -108,13 +108,13 @@ color jellybeans
 " Tag List 환경설정
 filetype on                                 "vim filetype on
 
-"Source Explorer 환경설정
-" nmap <F8> :SrcExplToggle<CR>                "F8 Key = SrcExpl Toggling
-nmap <F9> :TagbarToggle<CR>                 "4. vi에서 :PluginInstall하기
-nmap <C-H> <C-W>h                           "왼쪽 창으로 이동
-nmap <C-J> <C-W>j                           "아래 창으로 이동
-nmap <C-K> <C-W>k                           "윗 창으로 이동
-nmap <C-L> <C-W>l                           "오른쪽 창으로 이동
+" Tagbar 환경설정
+" nmap <F9> :TagbarToggle<CR>                 "4. vi에서 :PluginInstall하기
+map <Leader>tag <ESC>:TagbarToggle<CR>      " \tag 를 사용하여 tagbar 열기
+nmap <C-H> <C-W>h                           " 왼쪽 창으로 이동
+nmap <C-J> <C-W>j                           " 아래 창으로 이동
+nmap <C-K> <C-W>k                           " 윗 창으로 이동
+nmap <C-L> <C-W>l                           " 오른쪽 창으로 이동
 
 " 세부 정보 출력
 set nu
