@@ -14,9 +14,9 @@ function ubuntu()
 	echo "installing cross-compile dependencies..."
 
 	if [ ${parameter_perm} == "root" ]; then
-		apt install build-essential lzop u-boot-tools net-tools bison flex libssl-dev libncurses5-dev libncursesw5-dev unzip chrpath xz-utils minicom -y
+		apt install build-essential lzop u-boot-tools net-tools bison flex libssl-dev libncurses5-dev libncursesw5-dev unzip chrpath xz-utils minicom gcc-arm-linux-gnueabihf -y
 	elif [ ${parameter_perm} == "user" ]; then
-		sudo apt install build-essential lzop u-boot-tools net-tools bison flex libssl-dev libncurses5-dev libncursesw5-dev unzip chrpath xz-utils minicom -y
+		sudo apt install build-essential lzop u-boot-tools net-tools bison flex libssl-dev libncurses5-dev libncursesw5-dev unzip chrpath xz-utils minicom gcc-arm-linux-gnueabihf -y
 	else
 		echo "invalid permission ${parameter_perm}"
 		exit -1
