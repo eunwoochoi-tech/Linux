@@ -5,7 +5,7 @@ cur_path=`pwd`
 
 os_list_debian=("Debian" "Ubuntu" "Raspbian")
 os_list_redhat=("Centos" "Fedora" "RHEL")
-dependencies=("vim" "ctags" "wget" "curl")
+dependencies=("vim" "ctags" "wget" "curl" "git")
 
 target_vi='.vimrc'
 target_tmux='.tmux.conf'
