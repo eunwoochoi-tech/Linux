@@ -14,6 +14,8 @@ export ZSH="$HOME/.oh-my-zsh"
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 # ZSH_THEME="agnoster"
 ZSH_THEME="spaceship"
+export SPACESHIP_TIME_SHOW=true
+export SPACESHIP_DIR_TRUNC=5 
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -116,3 +118,5 @@ function precmd () {
   window_title="\033]0;${PWD##*/}\007"
   echo -ne "$window_title"
 }
+
+# conda config --set changeps1 False -> anaconda에서 자체적으로 쉘에 보여주는 현재 env 끄기
