@@ -15,17 +15,23 @@ Plugin 'git://git.wincent.com/command-t.git'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 
+" tagbar
+Plugin 'majutsushi/tagbar'
+
 " vim-easymotion(커서이동)
 Plugin 'Lokaltog/vim-easymotion'
 
 " 단어검색시 highlight
 Plugin 'haya14busa/incsearch.vim'
 
-" 디렉터리 검색 nerdtree
-Plugin 'scrooloose/nerdtree'
+" 코드 접기  new
+Plugin 'pangloss/vim-simplefold'
 
 " 문법확인
 Plugin 'scrooloose/syntastic'
+
+"여러 문자열 동시 강조 new good
+Plugin 'MultipleSearch'
 
 " 파일검색 및 파일 열기
 Plugin 'ctrlpvim/ctrlp.vim'
@@ -33,34 +39,63 @@ Plugin 'ctrlpvim/ctrlp.vim'
 " 스킨
 Plugin 'nanotech/jellybeans.vim'
 
-" tagbar
-Plugin 'majutsushi/tagbar'
+" indentline new good
+Plugin 'Yggdroot/indentLine'
 
-" indent-guides
-Plugin 'nathanaelkane/vim-indent-guides'
+" Nerd Commenter (파일 타입에 따라서 자동으로 주석을 달아줌) new good 
+Plugin 'scrooloose/nerdcommenter'
 
-" 뭐였지
+" 커서가 위치하지 않는 윈도우 바탕을 흐리게 만든다
 Plugin 'blueyed/vim-diminactive'
 
 call vundle#end()            " required
 "filetype plugin indent on    " required
 
-"NERDTree ON 단축키를 "\nt"로 설정
-map <Leader>nt <ESC>:NERDTree<CR>
-let NERDTreeShowHidden=1
-" let NERDTreeQuitOnOpen=1
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\.git$\|vendor$',
-    \ 'file': '\v\.(exe|so|dll)$'
-\ }
+color jellybeans
+let g:jellybeans_overrides = {
+\    'Todo': { 'guifg': '303030', 'guibg': 'f0f000',
+\              'ctermfg': 'Black', 'ctermbg': 'Yellow',
+\              'attr': 'bold' },
+\    'Comment': { 'guifg': 'cccccc' },
+\}
+let g:jellybeans_use_lowcolor_black = 1
+let g:jellybeans_use_term_italics = 1
+set guifont=Monaco:h10 noanti
 
-"vim-indent-guides setting
-let g:indent_guides_enable_on_vim_startup = 1
-let g:indent_guides_start_level = 2
-let g:indent_guides_guide_size = 1
-let g:indent_guides_auto_colors = 0
-" autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=3
-" autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
+"tagbar
+map <Leader>tag <ESC>:TagbarToggle<CR>
+map <Leader>bb <ESC>:%!xxd<CR>
+map <Leader>bx <ESC>:%!xxd -r<CR>
+nmap <C-H> <C-W>h                           "왼쪽 창으로 이동
+nmap <C-J> <C-W>j                           "아래 창으로 이동
+nmap <C-K> <C-W>k                           "윗 창으로 이동
+nmap <C-L> <C-W>l                           "오른쪽 창으로 이동
+
+"vim indentline
+"let g:indentLine_bgcolor_term = 202
+"let g:indentLine_char_list = ['|', '¦', '┆', '┊']
+let g:indentLine_color_term = 100
+let g:indentLine_char = '¦'
+let g:indentLine_first_char = ''
+let g:indentLine_showFirstIndentLevel = 0
+let g:indentLine_fileTypeExclude = ['help', 'nerdtree', 'text', 'sh']
+let g:indentLine_bufNameExclude = ['_.*', 'NERD_tree.*']
+let g:indentLine_maxLines = 3000
+let g:indentLine_enabled = 1
+nnoremap \il :IndentLinesToggle
+
+"nerdcommander
+filetype plugin on
+nmap // <leader>c<space>
+vmap // <leader>cs
+
+"Multiple Search
+let g:MultipleSearchMaxColors=11
+let g:MultipleSearchColorSequence="darkcyan,gray,LightCyan,LightBlue,LightGreen,blue,green,magenta,cyan,gray,brown"
+let g:MultipleSearchTextColorSequence="white,DarkRed,black,black,black,white,black,white,red,black,white"
+nnoremap  ,H :SearchReset 
+nnoremap  ,h :Search 
+"nnoremap  ,h :SearchBuffers 
 
 "vim-airline
 let g:airline#extensions#tabline#enabled = 1
@@ -69,64 +104,68 @@ let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#buffer_nr_show = 1       " buffer number를 보여준다
 let g:airline#extensions#tabline#buffer_nr_format = '%s:' " buffer number format
 let g:airline#extensions#tabline#formatter = 'default'
-nnoremap <C-S-t> :enew<Enter>         " 새로운 버퍼를 연다
-nnoremap <C-F5> :bprevious!<Enter>    " 이전 버퍼로 이동
-nnoremap <C-F6> :bnext!<Enter>        " 다음 버퍼로 이동
-nnoremap <C-F4> :bp <BAR> bd #<Enter> " 현재 버퍼를 닫고 이전 버퍼로 이동
-nnoremap , :bn<CR> " 콤마(,)를 사용하여 다음 버퍼로 이동
-nnoremap . :bd<CR> " 콤마(,)를 사용하여 다음 버퍼로 이동
+
+" 코드 접기
+let g:SimpylFold_docstring_preview=1
 
 "vim-incsearch
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
 set hlsearch
 let g:incsearch#auto_nohlsearch = 1
-map n  <Plug>(incsearch-nohl-n)
 map N  <Plug>(incsearch-nohl-N)
 map *  <Plug>(incsearch-nohl-*)
 map #  <Plug>(incsearch-nohl-#)
 map g* <Plug>(incsearch-nohl-g*)
 map g# <Plug>(incsearch-nohl-g#)
-let g:incsearch#highlight = {
-		\   'match' : {
-		\     'group' : 'IncSearchUnderline',
-		\     'priority' : '10'
-		\   },
-		\   'on_cursor' : {
-		\     'priority' : '100'
-		\   },
-		\   'cursor' : {
-		\     'group' : 'ErrorMsg',
-		\     'priority' : '1000'
-		\   }
-		\ }
+
+function! s:config_easyfuzzymotion(...) abort
+return extend(copy({
+\   'converters': [incsearch#config#fuzzy#converter()],
+\   'modules': [incsearch#config#easymotion#module()],
+\   'keymap': {"\": '(easymotion)'},
+\   'is_expr': 0,
+\   'is_stay': 1
+\ }), get(a:, 1, {}))
+endfunction
+noremap  z/ incsearch#go(config_easyfuzzymotion())
+"set hlsearch
+"let g:incsearch#auto_nohlsearch = 1
+"map n  <Plug>(incsearch-nohl-n)
+"map N  <Plug>(incsearch-nohl-N)
+"map *  <Plug>(incsearch-nohl-*)
+"map #  <Plug>(incsearch-nohl-#)
+"map g* <Plug>(incsearch-nohl-g*)
+"map g# <Plug>(incsearch-nohl-g#)
+"let g:incsearch#highlight = {
+		"\   'match' : {
+		"\     'group' : 'IncSearchUnderline',
+		"\     'priority' : '10'
+		"\   },
+		"\   'on_cursor' : {
+		"\     'priority' : '100'
+		"\   },
+		"\   'cursor' : {
+		"\     'group' : 'ErrorMsg',
+		"\     'priority' : '1000'
+		"\   }
+		"\ }
 
 "vim -ctrlp
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 
-color jellybeans
-
-" Tag List 환경설정
-filetype on                                 "vim filetype on
-
-" Tagbar 환경설정
-" nmap <F9> :TagbarToggle<CR>			"4. vi에서 :PluginInstall하기
-map <Leader>tag <ESC>:TagbarToggle<CR>		" \tag 를 사용하여 tagbar 열기
-map <Leader>bb <ESC>:%!xxd<CR>    		" \bb 를 사용하여 binary mode로 열기
-map <Leader>bx <ESC>:%!xxd -r<CR>     		" \bx 를 사용하여 binary mode 복구
-nmap <C-H> <C-W>h				" 왼쪽 창으로 이동
-nmap <C-J> <C-W>j				" 아래 창으로 이동
-nmap <C-K> <C-W>k				" 윗 창으로 이동
-nmap <C-L> <C-W>l				" 오른쪽 창으로 이동
 
 " 세부 정보 출력
-set nu
+set nu " 라인 번호 표시
 set title
-set showmatch
-set ruler
+set showmatch " 짝이 맞는 괄호를 보여줌
+set ruler " 화면 우측에 현재 커서의 위치 표시
 
 " 구문 강조 사용
 if has("syntax")
- syntax on
+  syntax on
 endif
 
 " 색깔 설정
@@ -135,14 +174,13 @@ set t_Co=256
 " 들여쓰기 설정
 set autoindent
 set smartindent
-set ts=4
-set sw=4
-set et
-set smarttab
+set ts=4 " tabstop => 탭을 스페이스4칸으로
+set sw=4 " shiftwidth => auto indent로 사용할 스페이스 개수
+set smarttab " sw, ts, sts를 참조하여 탭 및 백스페이스 동작 보조
 
 " 붙여넣기 설정
-set paste
-set mouse-=a
+"set paste
+set mouse-=a " mouse를 vim에서 못사용하게 하는 것
 
 " 한글 입력 설정
 set encoding=utf-8
@@ -155,8 +193,12 @@ set cursorline
 set laststatus=2
 set statusline=\ %<%l:%v\ [%P]%=%a\ %h%m%r\ %F\
 
-" 검색 설정
+" 검색 설정 (대소문자 무시)
 set ignorecase
+
+set et
+set nowrap
+retab
 
 " 투명도 설정
 hi Normal guibg=NONE ctermbg=NONE
@@ -166,6 +208,7 @@ au BufReadPost *
 \ if line("'\"") > 0 && line("'\"") <= line("$") |
 \ exe "norm g`\"" |
 \ endif
+
 " Markdown 문법 설정 (Git 에서 사용)
 augroup markdown
     " remove previous autocmds
